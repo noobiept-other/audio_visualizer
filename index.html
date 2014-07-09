@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio visualizer</title>
+
+    <script type="text/javascript" src="libraries/easeljs-0.7.1.min.js"></script>
+    <script type="text/javascript" src="libraries/soundjs-0.5.2.min.js"></script>
+
+    <script type="text/javascript" src="scripts/audio.js"></script>
+    <script type="text/javascript" src="scripts/main.js"></script>
+</head>
+<body>
+
+    <canvas id="MainCanvas"></canvas>
+
+    <div id="Menu">
+        <input id="StartStop" type="button" />
+        <span>
+            <label for="Volume">Volume</label>
+            <input id="Volume" type="range" min="0" max="1" step="0.1" />
+            <span id="VolumeValue"></span>
+        </span>
+    </div>
+
+</body>
+</html>
