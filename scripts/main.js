@@ -17,6 +17,7 @@ var BASE_URL = '';
 var BARS = [];
 var SHAPE_WIDTH;
 
+var PLAYER = null;
 
     // box2dweb
 var WORLD;
@@ -132,10 +133,36 @@ fixDef.shape.SetAsBox( 10 / SCALE, 10 / SCALE );
 bodyDef.position.x = 20 / SCALE;
 bodyDef.position.y = 20 / SCALE;
 
-var player = WORLD.CreateBody( bodyDef ).CreateFixture( fixDef );
+PLAYER = WORLD.CreateBody( bodyDef );
 
+PLAYER.CreateFixture( fixDef );
+
+
+window.addEventListener( 'keyup', keyboardShortcuts, false );
 createjs.Ticker.setFPS( G.FPS );
 createjs.Ticker.on( 'tick', tick );
+}
+
+
+function keyboardShortcuts( event )
+{
+var key = event.keyCode;
+var impulse = 2;
+
+if ( key == EVENT_KEY.leftArrow )
+    {
+    PLAYER.ApplyImpulse( new b2Vec2( -impulse, 0 ), PLAYER.GetWorldCenter() );
+    }
+
+else if ( key == EVENT_KEY.rightArrow )
+    {
+    PLAYER.ApplyImpulse( new b2Vec2( impulse, 0 ), PLAYER.GetWorldCenter() );
+    }
+
+else if ( key == EVENT_KEY.upArrow )
+    {
+    PLAYER.ApplyImpulse( new b2Vec2( 0, -impulse ), PLAYER.GetWorldCenter() );
+    }
 }
 
 
