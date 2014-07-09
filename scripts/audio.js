@@ -32,7 +32,8 @@ var context = createjs.Sound.activePlugin.context;
 
 var analyser = context.createAnalyser();
 
-//analyser.smoothingTimeConstant = 0.9;
+analyser.fftSize = 128;
+analyser.smoothingTimeConstant = 0.7;
 
     // add the analyser as the last node before the destination
     // need to change the last node connected, from the destination to the analyser
