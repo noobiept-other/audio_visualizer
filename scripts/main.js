@@ -1,14 +1,15 @@
 /*
     createjs
-        easeljs : 0.7
-        soundjs : 0.5
+        easeljs  : 0.7
+        soundjs  : 0.5
+        box2dweb : 2.1
  */
 
 var G = {
         CANVAS: null,
         CANVAS_DEBUG: null,
         STAGE: null,
-        DEBUG: true,
+        DEBUG: false,
         FPS: 60
     };
 
@@ -178,22 +179,22 @@ function keyboardShortcuts( event )
 var key = event.keyCode;
 var impulse = 2;
 
-if ( key == EVENT_KEY.leftArrow )
+if ( key == EVENT_KEY.leftArrow || key == EVENT_KEY.a )
     {
     PLAYER.applyImpulse( -impulse, 0 );
     }
 
-else if ( key == EVENT_KEY.rightArrow )
+else if ( key == EVENT_KEY.rightArrow || key == EVENT_KEY.d )
     {
     PLAYER.applyImpulse( impulse, 0 );
     }
 
-else if ( key == EVENT_KEY.upArrow )
+else if ( key == EVENT_KEY.upArrow || key == EVENT_KEY.w )
     {
     PLAYER.applyImpulse( 0, -impulse );
     }
 
-else if ( key == EVENT_KEY.downArrow )
+else if ( key == EVENT_KEY.downArrow || key == EVENT_KEY.s )
     {
     PLAYER.applyImpulse( 0, impulse );
     }
@@ -256,8 +257,10 @@ G.STAGE.update();
 
 function initMenu()
 {
+var container = document.querySelector( '#Menu' );
+
     // start/stop
-var startElement = document.querySelector( '#StartStop' );
+var startElement = container.querySelector( '#StartStop' );
 
 Audio.stop();
 startElement.value = 'Start';
@@ -280,8 +283,8 @@ startElement.onclick = function()
     };
 
     // volume
-var volume = document.querySelector( '#Volume' );
-var volumeValue = document.querySelector( '#VolumeValue' );
+var volume = container.querySelector( '#Volume' );
+var volumeValue = container.querySelector( '#VolumeValue' );
 
 var currentVolume = createjs.Sound.getVolume();
 
@@ -293,4 +296,6 @@ volume.oninput = function( event )
     volumeValue.innerHTML = volume.value;
     createjs.Sound.setVolume( volume.value );
     };
+
+container.style.display = 'block';
 }
