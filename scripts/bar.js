@@ -50,7 +50,7 @@ g.endFill();
 var targetY = this.shape.y + height;
 var currentY = this.body.GetPosition().y * SCALE - this.body_height + 1;
 
-var velocity = 10;
+var velocity = 15;
 var direction = 0;
 
 if ( currentY > targetY )

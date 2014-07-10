@@ -216,7 +216,6 @@ while( ELEMENTS_TO_REMOVE.length > 0 )
     element.remove();
     }
 
-ELEMENTS_TO_REMOVE.length = 0;
 
 NEW_CIRCLE_COUNT += event.delta;
 
