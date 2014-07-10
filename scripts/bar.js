@@ -21,7 +21,7 @@ fixDef.shape = new b2PolygonShape;
 var bodyDef = new b2BodyDef;
 
 var width = SHAPE_WIDTH;
-var height = 20;
+var height = 40;
 
 bodyDef.type = b2Body.b2_kinematicBody;
 fixDef.shape.SetAsBox( width / SCALE, height / SCALE );
@@ -31,6 +31,7 @@ var body = WORLD.CreateBody( bodyDef );
 
 body.CreateFixture( fixDef );
 
+this.body_height = height;
 this.body = body;
 this.shape = shape;
 }
@@ -47,7 +48,7 @@ g.endFill();
 
 
 var targetY = this.shape.y + height;
-var currentY = this.body.GetPosition().y * SCALE;
+var currentY = this.body.GetPosition().y * SCALE - this.body_height + 1;
 
 var velocity = 10;
 var direction = 0;

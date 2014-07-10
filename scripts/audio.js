@@ -33,7 +33,7 @@ var context = createjs.Sound.activePlugin.context;
 var analyser = context.createAnalyser();
 
 analyser.fftSize = 128;
-analyser.smoothingTimeConstant = 0.7;
+analyser.smoothingTimeConstant = 0.9;
 
     // add the analyser as the last node before the destination
     // need to change the last node connected, from the destination to the analyser
@@ -123,7 +123,6 @@ Audio.isPlaying = function()
 {
 return IS_PLAYING;
 };
-
 
 
 window.Audio = Audio;

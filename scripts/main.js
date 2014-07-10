@@ -9,7 +9,7 @@ var G = {
         CANVAS_DEBUG: null,
         STAGE: null,
         DEBUG: true,
-        FPS: 30
+        FPS: 60
     };
 
 var BASE_URL = '';
@@ -18,10 +18,15 @@ var BARS = [];
 var SHAPE_WIDTH;
 
 var PLAYER = null;
+var CIRCLES = [];
+var NEW_CIRCLE_INTERVAL = 1000;
+var NEW_CIRCLE_COUNT = 0;
 
     // box2dweb
 var WORLD;
 var SCALE = 30;
+
+var ELEMENTS_TO_REMOVE = [];
 
 var b2World = Box2D.Dynamics.b2World;
 var b2Body = Box2D.Dynamics.b2Body;
@@ -32,7 +37,7 @@ var b2Vec2 = Box2D.Common.Math.b2Vec2;
 var b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
 var b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
 var b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
-
+var b2ContactListener = Box2D.Dynamics.b2ContactListener;
 
 window.onload = function()
 {
@@ -65,6 +70,34 @@ WORLD = new b2World(
         true                    // allow sleep
     );
 
+var listener = new b2ContactListener;
+
+    // can't create/destroy box2d elements here
+listener.BeginContact = function( contact )
+    {
+    var objectA = contact.GetFixtureA().GetBody().GetUserData();
+    var objectB = contact.GetFixtureB().GetBody().GetUserData();
+
+    if ( objectA && objectB )
+        {
+        var isEnemyA = objectA.isEnemy;
+        var isEnemyB = objectB.isEnemy;
+
+            // detect collision between the player and some other circle
+        if ( isEnemyA === true && isEnemyB === false )
+            {
+            ELEMENTS_TO_REMOVE.push( objectA );
+            }
+
+        else if ( isEnemyA === false && isEnemyB === true )
+            {
+            ELEMENTS_TO_REMOVE.push( objectB );
+            }
+        }
+
+    };
+
+WORLD.SetContactListener( listener );
 
     // :: create the walls around the canvas :: //
 var thickness = 1;
@@ -102,15 +135,18 @@ bodyDef.position.Set( (G.CANVAS.width - thickness) / SCALE, 0 );
 WORLD.CreateBody( bodyDef ).CreateFixture( fixDef );
 
     // :: setup the debug draw :: //
-var debugDraw = new b2DebugDraw();
+if ( G.DEBUG )
+    {
+    var debugDraw = new b2DebugDraw();
 
-debugDraw.SetSprite( G.CANVAS_DEBUG.getContext( '2d' ) );
-debugDraw.SetDrawScale( SCALE );
-debugDraw.SetFillAlpha( 0.5 );
-debugDraw.SetLineThickness( 1 );
-debugDraw.SetFlags( b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit );
+    debugDraw.SetSprite( G.CANVAS_DEBUG.getContext( '2d' ) );
+    debugDraw.SetDrawScale( SCALE );
+    debugDraw.SetFillAlpha( 0.5 );
+    debugDraw.SetLineThickness( 1 );
+    debugDraw.SetFlags( b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit );
 
-WORLD.SetDebugDraw( debugDraw );
+    WORLD.SetDebugDraw( debugDraw );
+    }
 
 
     // :: draw the shapes :: //
@@ -127,16 +163,9 @@ for (var a = 0 ; a < numberOfPoints ; a++)
 
 
     // :: add the player :: //
-bodyDef.type = b2Body.b2_dynamicBody;
+PLAYER = new Circle( 50, 20, false );
 
-fixDef.shape.SetAsBox( 10 / SCALE, 10 / SCALE );
-bodyDef.position.x = 20 / SCALE;
-bodyDef.position.y = 20 / SCALE;
-
-PLAYER = WORLD.CreateBody( bodyDef );
-
-PLAYER.CreateFixture( fixDef );
-
+CIRCLES.push( PLAYER );
 
 window.addEventListener( 'keyup', keyboardShortcuts, false );
 createjs.Ticker.setFPS( G.FPS );
@@ -151,27 +180,52 @@ var impulse = 2;
 
 if ( key == EVENT_KEY.leftArrow )
     {
-    PLAYER.ApplyImpulse( new b2Vec2( -impulse, 0 ), PLAYER.GetWorldCenter() );
+    PLAYER.applyImpulse( -impulse, 0 );
     }
 
 else if ( key == EVENT_KEY.rightArrow )
     {
-    PLAYER.ApplyImpulse( new b2Vec2( impulse, 0 ), PLAYER.GetWorldCenter() );
+    PLAYER.applyImpulse( impulse, 0 );
     }
 
 else if ( key == EVENT_KEY.upArrow )
     {
-    PLAYER.ApplyImpulse( new b2Vec2( 0, -impulse ), PLAYER.GetWorldCenter() );
+    PLAYER.applyImpulse( 0, -impulse );
+    }
+
+else if ( key == EVENT_KEY.downArrow )
+    {
+    PLAYER.applyImpulse( 0, impulse );
     }
 }
 
 
-function tick()
+function tick( event )
 {
 if ( !Audio.isPlaying() )
     {
     return;
     }
+
+
+while( ELEMENTS_TO_REMOVE.length > 0 )
+    {
+    var element = ELEMENTS_TO_REMOVE.pop();
+
+    element.remove();
+    }
+
+ELEMENTS_TO_REMOVE.length = 0;
+
+NEW_CIRCLE_COUNT += event.delta;
+
+if ( NEW_CIRCLE_COUNT >= NEW_CIRCLE_INTERVAL )
+    {
+    NEW_CIRCLE_COUNT = 0;
+
+    CIRCLES.push( new Circle( 50, 20, true ) );
+    }
+
 
 var numberOfPoints = Audio.getNumberOfPoints();
 var freqByteData = Audio.getByteFrequencyData();
@@ -180,10 +234,17 @@ for (var a = 0 ; a < numberOfPoints ; a++)
     {
     var value = freqByteData[ a ];
     var percent = value / 256;
-    var height = G.CANVAS.height * percent;
+    var height = 0.9 * G.CANVAS.height * percent;
 
     BARS[ a ].setDimensions( SHAPE_WIDTH, -height );
     }
+
+
+for (var a = 0 ; a < CIRCLES.length ; a++)
+    {
+    CIRCLES[ a ].updateShapePosition();
+    }
+
 
 WORLD.Step( 1 / G.FPS, 10, 10 );
 WORLD.DrawDebugData();
