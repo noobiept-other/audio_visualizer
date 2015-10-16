@@ -12,6 +12,8 @@ var G = {
 
 var BARS = [];
 var SHAPE_WIDTH;
+var SOUND_LIST;
+var SELECTED_ID = -1;
 
 
 window.onload = function()
@@ -77,7 +79,6 @@ var container = document.querySelector( '#Menu' );
     // start/stop
 var startElement = container.querySelector( '#StartStop' );
 
-Sound.stop();
 startElement.value = 'Start';
 
 startElement.onclick = function()
@@ -91,9 +92,12 @@ startElement.onclick = function()
 
     else
         {
-        startElement.value = 'Stop';
+        if ( SELECTED_ID >= 0 )
+            {
+            startElement.value = 'Stop';
 
-        Sound.play();
+            Sound.play( SELECTED_ID );
+            }
         }
     };
 
@@ -115,15 +119,55 @@ volume.oninput = function( event )
 
     // file input
 var audioFile = document.getElementById( 'AudioFile' );
-var fileReader = new FileReader();
-
-fileReader.addEventListener( 'load', function( event )
-    {
-    Sound.decodeAudio( event.target.result );
-    });
 
 audioFile.addEventListener( 'change', function( event )
     {
-    fileReader.readAsArrayBuffer( event.target.files[ 0 ] );
+    addSound( event.target.files[ 0 ] );
+
+        // clear the input element
+    audioFile.value = '';
+
+    console.log( 'Loading sound..' );
     });
+
+SOUND_LIST = document.getElementById( 'SoundList' );
+}
+
+
+function addSound( file )
+{
+var fileReader = new FileReader();
+var fileName = file.name;
+
+fileReader.addEventListener( 'load', function( event )
+    {
+    Sound.decodeAudio( event.target.result, function( buffer )
+        {
+        var id = Sound.addSound( buffer );
+
+        var soundEntry = document.createElement( 'li' );
+
+        soundEntry.innerHTML = fileName;
+        soundEntry.addEventListener( 'click', selectSoundClick );
+        soundEntry.setAttribute( 'data-id', id );
+
+        SOUND_LIST.appendChild( soundEntry );
+
+        selectSound( id );
+        });
+    });
+
+fileReader.readAsArrayBuffer( file );
+}
+
+
+function selectSoundClick( event )
+{
+return selectSound( parseInt( event.target.getAttribute( 'data-id' ) ) );
+}
+
+
+function selectSound( id )
+{
+SELECTED_ID = id;
 }

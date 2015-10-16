@@ -42,14 +42,11 @@ GAIN_NODE.connect( AUDIO_CONTEXT.destination );
 };
 
 
-Sound.decodeAudio = function( arrayBuffer )
+Sound.decodeAudio = function( arrayBuffer, successCallback )
 {
 AUDIO_CONTEXT.decodeAudioData(
     arrayBuffer,
-    function( buffer )
-        {
-        Sound.addSound( buffer );
-        },
+    successCallback,
     function()
         {
         console.log( 'Error decoding the sound.' );
@@ -67,7 +64,10 @@ return BUFFER_LIST.length - 1;
 
 Sound.play = function( position )
 {
-position = 0;   //HERE
+if ( SOURCE_NODE )
+    {
+    SOURCE_NODE.stop();
+    }
 
 IS_PLAYING = true;
 
@@ -85,7 +85,7 @@ Sound.stop = function()
 {
 IS_PLAYING = false;
 
-//HERE
+SOURCE_NODE.stop();
 };
 
 

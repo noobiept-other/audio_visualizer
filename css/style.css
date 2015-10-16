@@ -2,3 +2,21 @@
     {
     border: 1px solid rgba(237, 154, 123, 0.50);
     }
+
+#Top
+    {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    }
+
+#Menu
+    {
+    text-align: center;
+    }
+
+#SoundList li
+    {
+    cursor: pointer;
+    }
