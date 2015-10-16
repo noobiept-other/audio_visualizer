@@ -23,18 +23,12 @@ G.CANVAS.width = 700;
 G.CANVAS.height = 400;
 
 
-    // calls start() if the audio loads
-Audio.init( start );
-};
-
-
-function start()
-{
+Sound.init();
 initMenu();
 
 
     // :: draw the shapes :: //
-var numberOfPoints = Audio.getNumberOfPoints();
+var numberOfPoints = Sound.getNumberOfPoints();
 SHAPE_WIDTH = G.CANVAS.width / numberOfPoints;
 
 
@@ -48,19 +42,19 @@ for (var a = 0 ; a < numberOfPoints ; a++)
 
 createjs.Ticker.setFPS( G.FPS );
 createjs.Ticker.on( 'tick', tick );
-}
+};
 
 
 function tick( event )
 {
-if ( !Audio.isPlaying() )
+if ( !Sound.isPlaying() )
     {
     return;
     }
 
 
-var numberOfPoints = Audio.getNumberOfPoints();
-var freqByteData = Audio.getByteFrequencyData();
+var numberOfPoints = Sound.getNumberOfPoints();
+var freqByteData = Sound.getByteFrequencyData();
 
 for (var a = 0 ; a < numberOfPoints ; a++)
     {
@@ -83,23 +77,23 @@ var container = document.querySelector( '#Menu' );
     // start/stop
 var startElement = container.querySelector( '#StartStop' );
 
-Audio.stop();
+Sound.stop();
 startElement.value = 'Start';
 
 startElement.onclick = function()
     {
-    if ( Audio.isPlaying() )
+    if ( Sound.isPlaying() )
         {
         startElement.value = 'Start';
 
-        Audio.stop();
+        Sound.stop();
         }
 
     else
         {
         startElement.value = 'Stop';
 
-        Audio.start();
+        Sound.play();
         }
     };
 
@@ -107,7 +101,7 @@ startElement.onclick = function()
 var volume = container.querySelector( '#Volume' );
 var volumeValue = container.querySelector( '#VolumeValue' );
 
-var currentVolume = createjs.Sound.getVolume();
+var currentVolume = Sound.getGlobalGain();
 
 volume.value = currentVolume;
 volumeValue.innerHTML = currentVolume;
@@ -115,7 +109,7 @@ volumeValue.innerHTML = currentVolume;
 volume.oninput = function( event )
     {
     volumeValue.innerHTML = volume.value;
-    createjs.Sound.setVolume( volume.value );
+    Sound.setGlobalGain( volume.value );
     };
 
 container.style.display = 'block';
