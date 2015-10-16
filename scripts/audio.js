@@ -51,7 +51,7 @@ TIME_BYTE_DATA = new Uint8Array( analyser.frequencyBinCount );
 ANALYSER_NODE = analyser;
 
 var manifest = [
-        { id: 'half_life', src: BASE_URL + 'audio/half_life_1.ogg' }
+        { id: 'half_life', src: 'audio/half_life_1.ogg' }
     ];
 
 createjs.Sound.alternateExtensions = [ 'mp3' ];

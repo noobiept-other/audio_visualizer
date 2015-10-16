@@ -1,6 +1,6 @@
-A visualizer of the half-life/valve intro song.
+Run
+===
 
-Arrow keys to control the blue circle.
+Start a local server at the root directory to run this application.
 
-
-Install it as a chrome application to try it out (tools -> extensions -> developer mode -> load unpacked extension).
+For example with python3: `python3 -m http.server`
