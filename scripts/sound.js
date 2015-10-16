@@ -5,7 +5,7 @@ var Sound;
 var AUDIO_CONTEXT;
 var IS_PLAYING = false;
 
-var SOUND_LIST = [];
+var BUFFER_LIST = [];
 
 var SOURCE_NODE;
 var ANALYSER_NODE;
@@ -42,17 +42,42 @@ GAIN_NODE.connect( AUDIO_CONTEXT.destination );
 };
 
 
-Sound.addSound = function()
+Sound.decodeAudio = function( arrayBuffer )
 {
-    //HERE
+AUDIO_CONTEXT.decodeAudioData(
+    arrayBuffer,
+    function( buffer )
+        {
+        Sound.addSound( buffer );
+        },
+    function()
+        {
+        console.log( 'Error decoding the sound.' );
+        });
 };
 
 
-Sound.play = function()
+Sound.addSound = function( buffer )
 {
+BUFFER_LIST.push( buffer );
+
+return BUFFER_LIST.length - 1;
+};
+
+
+Sound.play = function( position )
+{
+position = 0;   //HERE
+
 IS_PLAYING = true;
 
-SOURCE_NODE.start();
+var source = AUDIO_CONTEXT.createBufferSource();
+
+source.buffer = BUFFER_LIST[ position ];
+source.connect( ANALYSER_NODE );
+source.start();
+
+SOURCE_NODE = source;
 };
 
 

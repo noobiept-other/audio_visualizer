@@ -104,13 +104,26 @@ var volumeValue = container.querySelector( '#VolumeValue' );
 var currentVolume = Sound.getGlobalGain();
 
 volume.value = currentVolume;
-volumeValue.innerHTML = currentVolume;
+volumeValue.innerHTML = currentVolume.toFixed( 1 );
 
 volume.oninput = function( event )
     {
-    volumeValue.innerHTML = volume.value;
-    Sound.setGlobalGain( volume.value );
+    var newVolume = parseFloat( volume.value );
+    volumeValue.innerHTML = newVolume.toFixed( 1 );
+    Sound.setGlobalGain( newVolume );
     };
 
-container.style.display = 'block';
+    // file input
+var audioFile = document.getElementById( 'AudioFile' );
+var fileReader = new FileReader();
+
+fileReader.addEventListener( 'load', function( event )
+    {
+    Sound.decodeAudio( event.target.result );
+    });
+
+audioFile.addEventListener( 'change', function( event )
+    {
+    fileReader.readAsArrayBuffer( event.target.files[ 0 ] );
+    });
 }
