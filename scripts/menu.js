@@ -39,17 +39,37 @@ volume.oninput = function( event )
     Sound.setGlobalGain( newVolume );
     };
 
+    // smoothing
+var smoothing = document.getElementById( 'Smoothing' );
+var smoothingValue = document.getElementById( 'SmoothingValue' );
+
+var currentSmoothing = Sound.getCurrentSmoothing();
+
+smoothing.value = currentSmoothing;
+smoothingValue.innerHTML = currentSmoothing.toFixed( 1 );
+
+smoothing.oninput = function( event )
+    {
+    var newSmoothing = parseFloat( this.value );
+    smoothingValue.innerHTML = newSmoothing.toFixed( 1 );
+    Sound.setSmoothing( newSmoothing );
+    };
+
+
     // file input
 var audioFile = document.getElementById( 'AudioFile' );
 
 audioFile.addEventListener( 'change', function( event )
     {
-    Menu.addSound( event.target.files[ 0 ] );
+    var files = event.target.files;
+
+    if ( files.length > 0 )
+        {
+        Menu.addSound( files[ 0 ] );
+        }
 
         // clear the input element
     audioFile.value = '';
-
-    console.log( 'Loading sound..' );
     });
 
     // sound list

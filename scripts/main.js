@@ -1,7 +1,6 @@
 var G = {
         CANVAS: null,
-        STAGE: null,
-        FPS: 60
+        STAGE: null
     };
 
 var BARS = [];
@@ -36,7 +35,12 @@ document.body.addEventListener( 'drop', function( event )
     event.stopPropagation();
     event.preventDefault();
 
-    Menu.addSound( event.dataTransfer.files[ 0 ] );
+    var files = event.dataTransfer.files;
+
+    if ( files.length > 0 )
+        {
+        Menu.addSound( files[ 0 ] );
+        }
     });
 
 document.body.addEventListener( 'keyup', keyboardShortcuts );
@@ -52,7 +56,7 @@ for (var a = 0 ; a < numberOfPoints ; a++)
     BARS.push( bar );
     }
 
-createjs.Ticker.setFPS( G.FPS );
+createjs.Ticker.timingMode = createjs.Ticker.RAF;
 createjs.Ticker.on( 'tick', tick );
 };
 
@@ -83,8 +87,8 @@ var freqByteData = Sound.getByteFrequencyData();
 for (var a = 0 ; a < numberOfPoints ; a++)
     {
     var value = freqByteData[ a ];
-    var percent = value / 256;
-    var height = 0.9 * G.CANVAS.height * percent;
+    var percent = value / 255;
+    var height = G.CANVAS.height * percent;
 
     BARS[ a ].setDimensions( SHAPE_WIDTH, -height );
     }

@@ -25,6 +25,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: stretch;
+    max-width: 250px;
     }
 
 #SoundList li
