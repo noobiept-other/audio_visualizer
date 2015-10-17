@@ -1,9 +1,3 @@
-/*
-    createjs
-        easeljs  : 0.7
-        soundjs  : 0.5
- */
-
 var G = {
         CANVAS: null,
         STAGE: null,
@@ -12,8 +6,6 @@ var G = {
 
 var BARS = [];
 var SHAPE_WIDTH;
-var SOUND_LIST;
-var SELECTED_ID = -1;
 
 
 window.onload = function()
@@ -26,13 +18,12 @@ G.CANVAS.height = 400;
 
 
 Sound.init();
-initMenu();
+Menu.init();
 
 
-    // :: draw the shapes :: //
+    // :: draw the bar shapes :: //
 var numberOfPoints = Sound.getNumberOfPoints();
 SHAPE_WIDTH = G.CANVAS.width / numberOfPoints;
-
 
 for (var a = 0 ; a < numberOfPoints ; a++)
     {
@@ -40,7 +31,6 @@ for (var a = 0 ; a < numberOfPoints ; a++)
 
     BARS.push( bar );
     }
-
 
 createjs.Ticker.setFPS( G.FPS );
 createjs.Ticker.on( 'tick', tick );
@@ -69,105 +59,4 @@ for (var a = 0 ; a < numberOfPoints ; a++)
 
 
 G.STAGE.update();
-}
-
-
-function initMenu()
-{
-var container = document.querySelector( '#Menu' );
-
-    // start/stop
-var startElement = container.querySelector( '#StartStop' );
-
-startElement.value = 'Start';
-
-startElement.onclick = function()
-    {
-    if ( Sound.isPlaying() )
-        {
-        startElement.value = 'Start';
-
-        Sound.stop();
-        }
-
-    else
-        {
-        if ( SELECTED_ID >= 0 )
-            {
-            startElement.value = 'Stop';
-
-            Sound.play( SELECTED_ID );
-            }
-        }
-    };
-
-    // volume
-var volume = container.querySelector( '#Volume' );
-var volumeValue = container.querySelector( '#VolumeValue' );
-
-var currentVolume = Sound.getGlobalGain();
-
-volume.value = currentVolume;
-volumeValue.innerHTML = currentVolume.toFixed( 1 );
-
-volume.oninput = function( event )
-    {
-    var newVolume = parseFloat( volume.value );
-    volumeValue.innerHTML = newVolume.toFixed( 1 );
-    Sound.setGlobalGain( newVolume );
-    };
-
-    // file input
-var audioFile = document.getElementById( 'AudioFile' );
-
-audioFile.addEventListener( 'change', function( event )
-    {
-    addSound( event.target.files[ 0 ] );
-
-        // clear the input element
-    audioFile.value = '';
-
-    console.log( 'Loading sound..' );
-    });
-
-SOUND_LIST = document.getElementById( 'SoundList' );
-}
-
-
-function addSound( file )
-{
-var fileReader = new FileReader();
-var fileName = file.name;
-
-fileReader.addEventListener( 'load', function( event )
-    {
-    Sound.decodeAudio( event.target.result, function( buffer )
-        {
-        var id = Sound.addSound( buffer );
-
-        var soundEntry = document.createElement( 'li' );
-
-        soundEntry.innerHTML = fileName;
-        soundEntry.addEventListener( 'click', selectSoundClick );
-        soundEntry.setAttribute( 'data-id', id );
-
-        SOUND_LIST.appendChild( soundEntry );
-
-        selectSound( id );
-        });
-    });
-
-fileReader.readAsArrayBuffer( file );
-}
-
-
-function selectSoundClick( event )
-{
-return selectSound( parseInt( event.target.getAttribute( 'data-id' ) ) );
-}
-
-
-function selectSound( id )
-{
-SELECTED_ID = id;
 }
