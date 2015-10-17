@@ -18,7 +18,7 @@ var startElement = container.querySelector( '#StartStop' );
 startElement.value = 'Start';
 startElement.onclick = function( event )
     {
-    startStop();
+    Menu.startStop();
     };
 
 START_STOP = startElement;
@@ -59,7 +59,7 @@ SOUND_LIST = document.getElementById( 'SoundList' );
 /**
  * Either force a start/stop state, or toggle between the states (if called without the argument).
  */
-function startStop( start )
+Menu.startStop = function( start )
 {
     // toggle the state
 if ( typeof start === 'undefined' )
@@ -83,7 +83,7 @@ else
 
     Sound.stop();
     }
-}
+};
 
 
 function addSound( file )
@@ -133,7 +133,7 @@ SELECTED_LI = element;
 
 element.setAttribute( 'id', 'SoundSelected' );
 
-startStop( true );
+Menu.startStop( true );
 }
 
 

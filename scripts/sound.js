@@ -67,6 +67,7 @@ Sound.play = function( position )
 if ( SOURCE_NODE )
     {
     SOURCE_NODE.stop();
+    SOURCE_NODE.disconnect();
     }
 
 IS_PLAYING = true;
@@ -75,6 +76,7 @@ var source = AUDIO_CONTEXT.createBufferSource();
 
 source.buffer = BUFFER_LIST[ position ];
 source.connect( ANALYSER_NODE );
+source.loop = true;
 source.start();
 
 SOURCE_NODE = source;

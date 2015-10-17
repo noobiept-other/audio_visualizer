@@ -20,10 +20,11 @@ G.CANVAS.height = 400;
 Sound.init();
 Menu.init();
 
+document.body.addEventListener( 'keyup', keyboardShortcuts );
 
     // :: draw the bar shapes :: //
 var numberOfPoints = Sound.getNumberOfPoints();
-SHAPE_WIDTH = G.CANVAS.width / numberOfPoints;
+SHAPE_WIDTH = Math.floor( G.CANVAS.width / numberOfPoints );
 
 for (var a = 0 ; a < numberOfPoints ; a++)
     {
@@ -35,6 +36,18 @@ for (var a = 0 ; a < numberOfPoints ; a++)
 createjs.Ticker.setFPS( G.FPS );
 createjs.Ticker.on( 'tick', tick );
 };
+
+
+function keyboardShortcuts( event )
+{
+switch( event.keyCode )
+    {
+        // space key
+    case 32:
+        Menu.startStop();
+        break;
+    }
+}
 
 
 function tick( event )
