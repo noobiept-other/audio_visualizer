@@ -20,6 +20,25 @@ G.CANVAS.height = 400;
 Sound.init();
 Menu.init();
 
+    // files can be dragged and dropped on the body element
+document.body.addEventListener( 'dragenter', function( event )
+    {
+    event.stopPropagation();
+    event.preventDefault();
+    });
+document.body.addEventListener( 'dragover', function( event )
+    {
+    event.stopPropagation();
+    event.preventDefault();
+    });
+document.body.addEventListener( 'drop', function( event )
+    {
+    event.stopPropagation();
+    event.preventDefault();
+
+    Menu.addSound( event.dataTransfer.files[ 0 ] );
+    });
+
 document.body.addEventListener( 'keyup', keyboardShortcuts );
 
     // :: draw the bar shapes :: //

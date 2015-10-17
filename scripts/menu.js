@@ -44,7 +44,7 @@ var audioFile = document.getElementById( 'AudioFile' );
 
 audioFile.addEventListener( 'change', function( event )
     {
-    addSound( event.target.files[ 0 ] );
+    Menu.addSound( event.target.files[ 0 ] );
 
         // clear the input element
     audioFile.value = '';
@@ -52,6 +52,7 @@ audioFile.addEventListener( 'change', function( event )
     console.log( 'Loading sound..' );
     });
 
+    // sound list
 SOUND_LIST = document.getElementById( 'SoundList' );
 };
 
@@ -86,10 +87,15 @@ else
 };
 
 
-function addSound( file )
+Menu.addSound = function( file )
 {
 var fileReader = new FileReader();
 var fileName = file.name;
+
+var soundEntry = document.createElement( 'li' );
+
+soundEntry.innerHTML = 'Loading..';
+SOUND_LIST.appendChild( soundEntry );
 
 fileReader.addEventListener( 'load', function( event )
     {
@@ -97,20 +103,16 @@ fileReader.addEventListener( 'load', function( event )
         {
         var id = Sound.addSound( buffer );
 
-        var soundEntry = document.createElement( 'li' );
-
         soundEntry.innerHTML = fileName;
         soundEntry.addEventListener( 'click', selectSoundClick );
         soundEntry.setAttribute( 'data-id', id );
-
-        SOUND_LIST.appendChild( soundEntry );
 
         selectSound( id, soundEntry );
         });
     });
 
 fileReader.readAsArrayBuffer( file );
-}
+};
 
 
 function selectSoundClick( event )

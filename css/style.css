@@ -16,6 +16,17 @@
     text-align: center;
     }
 
+
+    /* ---- Sound List ---- */
+
+#SoundListContainer
+    {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    }
+
 #SoundList li
     {
     cursor: pointer;
