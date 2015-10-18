@@ -11,11 +11,6 @@
     align-items: stretch;
     }
 
-#Menu
-    {
-    text-align: center;
-    }
-
 
     /* ---- Sound List ---- */
 
@@ -36,4 +31,22 @@
 #SoundSelected
     {
     background-color: beige;
+    }
+
+
+    /* ---- Menu ---- */
+
+#Menu
+    {
+    text-align: center;
+    }
+
+#Menu ul
+    {
+    list-style-type: none;
+    }
+
+#Menu li
+    {
+    display: inline-block;
     }

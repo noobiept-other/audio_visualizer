@@ -74,6 +74,24 @@ audioFile.addEventListener( 'change', function( event )
 
     // sound list
 SOUND_LIST = document.getElementById( 'SoundList' );
+
+    // audio filters
+var filterType = document.getElementById( 'FilterType' );
+
+filterType.onchange = function( event )
+    {
+    var value = this.value;
+
+    if ( value === '' )
+        {
+        Sound.removeFilter();
+        }
+
+    else
+        {
+        Sound.setFilter( value );
+        }
+    };
 };
 
 
