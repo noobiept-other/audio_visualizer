@@ -38,6 +38,10 @@ body
     background-color: beige;
     }
 
+.error
+    {
+    color: darkred;
+    }
 
     /* ---- Menu ---- */
 

@@ -38,9 +38,9 @@ document.body.addEventListener( 'drop', function( event )
 
     var files = event.dataTransfer.files;
 
-    if ( files.length > 0 )
+    for (var a = 0 ; a < files.length ; a++)
         {
-        Menu.addSound( files[ 0 ] );
+        Menu.addSound( files[ a ] );
         }
     });
 

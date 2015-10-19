@@ -44,15 +44,9 @@ GAIN_NODE.connect( AUDIO_CONTEXT.destination );
 };
 
 
-Sound.decodeAudio = function( arrayBuffer, successCallback )
+Sound.decodeAudio = function( arrayBuffer, successCallback, failureCallback )
 {
-AUDIO_CONTEXT.decodeAudioData(
-    arrayBuffer,
-    successCallback,
-    function()
-        {
-        console.log( 'Error decoding the sound.' );
-        });
+AUDIO_CONTEXT.decodeAudioData( arrayBuffer, successCallback, failureCallback );
 };
 
 

@@ -68,9 +68,9 @@ audioFile.addEventListener( 'change', function( event )
     {
     var files = event.target.files;
 
-    if ( files.length > 0 )
+    for (var a = 0 ; a < files.length ; a++)
         {
-        Menu.addSound( files[ 0 ] );
+        Menu.addSound( files[ a ] );
         }
 
         // clear the input element
@@ -189,16 +189,30 @@ SOUND_LIST.appendChild( soundEntry );
 
 fileReader.addEventListener( 'load', function( event )
     {
-    Sound.decodeAudio( event.target.result, function( buffer )
-        {
-        var id = Sound.addSound( buffer );
+    Sound.decodeAudio(
+        event.target.result,
+        function( buffer )
+            {
+            var id = Sound.addSound( buffer );
 
-        soundEntry.innerHTML = fileName;
-        soundEntry.addEventListener( 'click', selectSoundClick );
-        soundEntry.setAttribute( 'data-id', id );
+            soundEntry.innerHTML = fileName;
+            soundEntry.addEventListener( 'click', selectSoundClick );
+            soundEntry.setAttribute( 'data-id', id );
 
-        selectSound( id, soundEntry );
-        });
+            selectSound( id, soundEntry );
+            },
+        function()
+            {
+            soundEntry.innerHTML = 'Error!';
+            soundEntry.className = 'error';
+
+            console.log( 'Error decoding sound file: ' + fileName );
+
+            window.setTimeout( function()
+                {
+                SOUND_LIST.removeChild( soundEntry );
+                }, 3000 );
+            });
     });
 
 fileReader.readAsArrayBuffer( file );
