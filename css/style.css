@@ -1,3 +1,8 @@
+body
+    {
+    font-size: 22px;
+    }
+
 #MainCanvas
     {
     border: 1px solid rgba(237, 154, 123, 0.50);
@@ -49,4 +54,12 @@
 #Menu li
     {
     display: inline-block;
+    }
+
+.menuValue
+    {
+    display: inline-block;
+    min-width: 55px;
+    color: green;
+    font-weight: bold;
     }

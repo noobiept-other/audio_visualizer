@@ -104,7 +104,46 @@ frequency.oninput = function( event )
     {
     frequencyValue.innerHTML = this.value;
     Sound.setFilterFrequency( parseInt( this.value, 10 ) );
-    }
+    };
+
+    // filter detune
+var detune = document.getElementById( 'Detune' );
+var detuneValue = document.getElementById( 'DetuneValue' );
+
+detune.value = Sound.getFilterDetune();
+detuneValue.innerHTML = detune.value;
+
+detune.oninput = function( event )
+    {
+    detuneValue.innerHTML = this.value;
+    Sound.setFilterDetune( parseInt( this.value, 10 ) );
+    };
+
+    // filter Q
+var q = document.getElementById( 'Q' );
+var qValue = document.getElementById( 'QValue' );
+
+q.value = Sound.getFilterQ();
+qValue.innerHTML = q.value;
+
+q.oninput = function( event )
+    {
+    qValue.innerHTML = this.value;
+    Sound.setFilterQ( parseInt( this.value, 10 ) );
+    };
+
+    // filter gain
+var gain = document.getElementById( 'Gain' );
+var gainValue = document.getElementById( 'GainValue' );
+
+gain.value = Sound.getFilterGain();
+gainValue.innerHTML = gain.value;
+
+gain.oninput = function( event )
+    {
+    gainValue.innerHTML = this.value;
+    Sound.setFilterGain( parseInt( this.value, 10 ) );
+    };
 };
 
 

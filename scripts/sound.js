@@ -198,4 +198,40 @@ return FILTER_NODE.frequency.value;
 };
 
 
+Sound.setFilterDetune = function( detune )
+{
+FILTER_NODE.detune.value = detune;
+};
+
+
+Sound.getFilterDetune = function()
+{
+return FILTER_NODE.detune.value;
+};
+
+
+Sound.setFilterQ = function( q )
+{
+FILTER_NODE.Q.value = q;
+};
+
+
+Sound.getFilterQ = function()
+{
+return FILTER_NODE.Q.value;
+};
+
+
+Sound.setFilterGain = function( gain )
+{
+FILTER_NODE.gain.value = gain;
+};
+
+
+Sound.getFilterGain = function()
+{
+return FILTER_NODE.gain.value;
+};
+
+
 })(Sound || (Sound = {}));

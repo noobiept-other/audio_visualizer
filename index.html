@@ -29,12 +29,12 @@
             <li><input id="StartStop" type="button" /></li>
             <li>
                 <label for="Volume">Volume: </label>
-                <span id="VolumeValue"></span>
+                <span id="VolumeValue" class="menuValue"></span>
                 <input id="Volume" type="range" min="0" max="1" step="0.1" />
             </li>
             <li>
                 <label for="Smoothing">Smoothing: </label>
-                <span id="SmoothingValue"></span>
+                <span id="SmoothingValue" class="menuValue"></span>
                 <input id="Smoothing" type="range" min="0" max="1" step="0.1" />
             </li>
         </ul>
@@ -55,23 +55,23 @@
             </li>
             <li id="DetuneContainer">
                 <label for="Detune">Detune: </label>
-                <span id="DetuneValue"></span>
-                <input id="Detune" type="range" min="100" max="15000" step="100" />
+                <span id="DetuneValue" class="menuValue"></span>
+                <input id="Detune" type="range" min="0" max="5000" step="100" />
             </li>
             <li id="FrequencyContainer">
                 <label for="Frequency">Frequency: </label>
-                <span id="FrequencyValue"></span>
+                <span id="FrequencyValue" class="menuValue"></span>
                 <input id="Frequency" type="range" min="100" max="15000" step="100" />
             </li>
             <li id="QContainer">
                 <label for="Q">Q: </label>
-                <span id="QValue"></span>
+                <span id="QValue" class="menuValue"></span>
                 <input id="Q" type="range" min="0" max="1000" step="10" />
             </li>
             <li id="GainContainer">
                 <label for="Gain">Gain: </label>
-                <span id="GainValue"></span>
-                <input id="Gain" type="range" min="-50" max="50" step="10" />
+                <span id="GainValue" class="menuValue"></span>
+                <input id="Gain" type="range" min="-40" max="40" step="5" />
             </li>
         </ul>
     </div>
