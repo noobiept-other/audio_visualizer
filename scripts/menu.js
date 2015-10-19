@@ -7,6 +7,11 @@ var START_STOP;
 var SELECTED_ID = -1;
 var SELECTED_LI;
 
+var FREQUENCY_CONTAINER;
+var DETUNE_CONTAINER;
+var Q_CONTAINER;
+var GAIN_CONTAINER;
+
 
 Menu.init = function()
 {
@@ -75,23 +80,31 @@ audioFile.addEventListener( 'change', function( event )
     // sound list
 SOUND_LIST = document.getElementById( 'SoundList' );
 
-    // audio filters
+    // filter type
 var filterType = document.getElementById( 'FilterType' );
 
 filterType.onchange = function( event )
     {
-    var value = this.value;
-
-    if ( value === '' )
-        {
-        Sound.removeFilter();
-        }
-
-    else
-        {
-        Sound.setFilter( value );
-        }
+    Menu.selectFilter( this.value );
     };
+
+FREQUENCY_CONTAINER = document.getElementById( 'FrequencyContainer' );
+DETUNE_CONTAINER = document.getElementById( 'DetuneContainer' );
+Q_CONTAINER = document.getElementById( 'QContainer' );
+GAIN_CONTAINER = document.getElementById( 'GainContainer' );
+
+    // filter frequency
+var frequency = document.getElementById( 'Frequency' );
+var frequencyValue = document.getElementById( 'FrequencyValue' );
+
+frequency.value = Sound.getFilterFrequency();
+frequencyValue.innerHTML = frequency.value;
+
+frequency.oninput = function( event )
+    {
+    frequencyValue.innerHTML = this.value;
+    Sound.setFilterFrequency( parseInt( this.value, 10 ) );
+    }
 };
 
 
@@ -175,6 +188,58 @@ element.setAttribute( 'id', 'SoundSelected' );
 
 Menu.startStop( true );
 }
+
+
+/**
+ * @param type The type of filter to select. Pass an empty string to remove the filter.
+ */
+Menu.selectFilter = function( type )
+{
+switch( type )
+    {
+        // remove the filter
+    case '':
+        FREQUENCY_CONTAINER.style.display = 'none';
+        DETUNE_CONTAINER.style.display = 'none';
+        Q_CONTAINER.style.display = 'none';
+        GAIN_CONTAINER.style.display = 'none';
+
+        Sound.removeFilter();
+        break;
+
+    case 'lowpass':
+    case 'highpass':
+    case 'bandpass':
+    case 'notch':
+    case 'allpass':
+        FREQUENCY_CONTAINER.style.display = 'inline-block';
+        DETUNE_CONTAINER.style.display = 'inline-block';
+        Q_CONTAINER.style.display = 'inline-block';
+        GAIN_CONTAINER.style.display = 'none';
+
+        Sound.setFilter( type );
+        break;
+
+    case 'lowshelf':
+    case 'highshelf':
+        FREQUENCY_CONTAINER.style.display = 'inline-block';
+        DETUNE_CONTAINER.style.display = 'inline-block';
+        Q_CONTAINER.style.display = 'none';
+        GAIN_CONTAINER.style.display = 'inline-block';
+
+        Sound.setFilter( type );
+        break;
+
+    case 'peaking':
+        FREQUENCY_CONTAINER.style.display = 'inline-block';
+        DETUNE_CONTAINER.style.display = 'inline-block';
+        Q_CONTAINER.style.display = 'inline-block';
+        GAIN_CONTAINER.style.display = 'inline-block';
+
+        Sound.setFilter( type );
+        break;
+    }
+};
 
 
 })(Menu || (Menu = {}));

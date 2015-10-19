@@ -150,10 +150,9 @@ return ANALYSER_NODE.smoothingTimeConstant;
 /**
  * See `https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode` for more information about what arguments to pass and its values.
  */
-Sound.setFilter = function( type, frequency, detune, q, gain )
+Sound.setFilter = function( type )
 {
 FILTER_NODE.type = type;
-FILTER_NODE.frequency.value = 1000;
 
 if ( !IS_FILTER_CONNECTED )
     {
@@ -184,6 +183,18 @@ if ( SOURCE_NODE )
     {
     SOURCE_NODE.connect( ANALYSER_NODE );
     }
+};
+
+
+Sound.setFilterFrequency = function( frequency )
+{
+FILTER_NODE.frequency.value = frequency;
+};
+
+
+Sound.getFilterFrequency = function()
+{
+return FILTER_NODE.frequency.value;
 };
 
 

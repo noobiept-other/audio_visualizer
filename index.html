@@ -20,7 +20,7 @@
         <div id="SoundListContainer">
             <div>Sound List</div>
             <ul id="SoundList"></ul>
-            <input id="AudioFile" type="file" accept="audio/basic" />
+            <input id="AudioFile" type="file" accept="audio/*" />
         </div>
     </div>
 
@@ -44,7 +44,34 @@
                 <select id="FilterType">
                     <option value="">Off</option>
                     <option value="lowpass">Lowpass</option>
+                    <option value="highpass">Highpass</option>
+                    <option value="bandpass">Bandpass</option>
+                    <option value="lowshelf">Lowshelf</option>
+                    <option value="highshelf">Highshelf</option>
+                    <option value="peaking">Peaking</option>
+                    <option value="notch">Notch</option>
+                    <option value="allpass">Allpass</option>
                 </select>
+            </li>
+            <li id="DetuneContainer">
+                <label for="Detune">Detune: </label>
+                <span id="DetuneValue"></span>
+                <input id="Detune" type="range" min="100" max="15000" step="100" />
+            </li>
+            <li id="FrequencyContainer">
+                <label for="Frequency">Frequency: </label>
+                <span id="FrequencyValue"></span>
+                <input id="Frequency" type="range" min="100" max="15000" step="100" />
+            </li>
+            <li id="QContainer">
+                <label for="Q">Q: </label>
+                <span id="QValue"></span>
+                <input id="Q" type="range" min="0" max="1000" step="10" />
+            </li>
+            <li id="GainContainer">
+                <label for="Gain">Gain: </label>
+                <span id="GainValue"></span>
+                <input id="Gain" type="range" min="-50" max="50" step="10" />
             </li>
         </ul>
     </div>

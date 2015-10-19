@@ -18,6 +18,7 @@ G.CANVAS.height = 400;
 
 Sound.init();
 Menu.init();
+Menu.selectFilter( '' );    // start without a filter set
 
     // files can be dragged and dropped on the body element
 document.body.addEventListener( 'dragenter', function( event )
