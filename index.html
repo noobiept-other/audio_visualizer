@@ -16,10 +16,11 @@
 </head>
 <body>
     <div id="Top">
-        <canvas id="MainCanvas"></canvas>
+        <div>
+            <canvas id="MainCanvas"></canvas>
+        </div>
 
         <div id="SoundListContainer">
-            <div>Sound List</div>
             <ul id="SoundList"></ul>
             <input id="AudioFile" type="file" accept="audio/*" multiple />
         </div>
@@ -41,7 +42,7 @@
             <li>
                 <label for="FftSize">Fft size: </label>
                 <span id="FftSizeValue" class="menuValue"></span>
-                <input id="FftSize" type="range" min="1" max="7" step="1" />
+                <input id="FftSize" type="range" />
             </li>
         </ul>
         <ul>
@@ -62,17 +63,17 @@
             <li id="DetuneContainer">
                 <label for="Detune">Detune: </label>
                 <span id="DetuneValue" class="menuValue"></span>
-                <input id="Detune" type="range" min="0" max="5000" step="100" />
+                <input id="Detune" type="range" min="-2000" max="2000" step="100" />
             </li>
             <li id="FrequencyContainer">
                 <label for="Frequency">Frequency: </label>
                 <span id="FrequencyValue" class="menuValue"></span>
-                <input id="Frequency" type="range" min="100" max="15000" step="100" />
+                <input id="Frequency" type="range" min="50" max="15000" step="50" />
             </li>
             <li id="QContainer">
                 <label for="Q">Q: </label>
                 <span id="QValue" class="menuValue"></span>
-                <input id="Q" type="range" min="0" max="1000" step="10" />
+                <input id="Q" type="range" />
             </li>
             <li id="GainContainer">
                 <label for="Gain">Gain: </label>

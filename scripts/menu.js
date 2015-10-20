@@ -136,17 +136,20 @@ detune.oninput = function( event )
     };
 
     // filter Q
-var q = document.getElementById( 'Q' );
-var qValue = document.getElementById( 'QValue' );
+var qInput = new RangeInput(
+        'Q',
+        'QValue',
+        [ 0.0001, 0.001, 0.01, 0.05, 0.1, 0.5, 1, 2, 5, 10 ],
+        function( value )
+            {
+            Sound.setFilterQ( value );
+            }
+    );
 
-q.value = Sound.getFilterQ();
-qValue.innerHTML = q.value;
+qInput.setValue( Sound.getFilterQ() );
 
-q.oninput = function( event )
-    {
-    qValue.innerHTML = this.value;
-    Sound.setFilterQ( parseInt( this.value, 10 ) );
-    };
+RANGE_ELEMENTS.push( qInput );
+
 
     // filter gain
 var gain = document.getElementById( 'Gain' );

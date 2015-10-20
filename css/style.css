@@ -25,12 +25,25 @@ body
     flex-direction: column;
     justify-content: space-between;
     align-items: stretch;
-    max-width: 250px;
+    max-width: 300px;
+    }
+
+#SoundList
+    {
+    height: 390px;
+    overflow-y: auto;
+    margin: 0;
     }
 
 #SoundList li
     {
     cursor: pointer;
+    }
+
+#AudioFile
+    {
+    margin: 5px;
+    margin-bottom: 0;
     }
 
 #SoundSelected
