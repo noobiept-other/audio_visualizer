@@ -44,22 +44,43 @@ document.body.addEventListener( 'drop', function( event )
         }
     });
 
+updateBars();
+
 document.body.addEventListener( 'keyup', keyboardShortcuts );
 
-    // :: draw the bar shapes :: //
-var numberOfPoints = Sound.getNumberOfPoints();
-SHAPE_WIDTH = Math.floor( G.CANVAS.width / numberOfPoints );
+createjs.Ticker.timingMode = createjs.Ticker.RAF;
+createjs.Ticker.on( 'tick', tick );
+};
 
-for (var a = 0 ; a < numberOfPoints ; a++)
+
+/**
+ * Add the bar shapes that show the visualization of the sound.
+ * The number of elements depends on the fft size being used by the analyser node.
+ * It clears the previous bars that may have been added.
+ */
+function updateBars()
+{
+var a;
+
+    // clear any previously added bars
+for (a = 0 ; a < BARS.length ; a++)
+    {
+    BARS[ a ].remove();
+    }
+
+BARS.length = 0;
+
+    // add the bars based on the current fft size
+var numberOfPoints = Sound.getNumberOfPoints();
+SHAPE_WIDTH = G.CANVAS.width / numberOfPoints;
+
+for (a = 0 ; a < numberOfPoints ; a++)
     {
     var bar = new Bar( SHAPE_WIDTH * a, G.CANVAS.height );
 
     BARS.push( bar );
     }
-
-createjs.Ticker.timingMode = createjs.Ticker.RAF;
-createjs.Ticker.on( 'tick', tick );
-};
+}
 
 
 function keyboardShortcuts( event )

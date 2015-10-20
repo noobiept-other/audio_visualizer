@@ -29,7 +29,8 @@ ANALYSER_NODE.fftSize = 128;
 
 
     // set up the arrays that we use to retrieve the analyserNode data
-FREQ_BYTE_DATA = new Uint8Array( ANALYSER_NODE.frequencyBinCount );
+    // 1024 is the 'frequencyBinCount' value of the maximum value the 'fftSize' can have (its from 32 to 2048)
+FREQ_BYTE_DATA = new Uint8Array( 1024 );
 
 
     // add a gain node, will be used to control the volume
@@ -225,6 +226,18 @@ FILTER_NODE.gain.value = gain;
 Sound.getFilterGain = function()
 {
 return FILTER_NODE.gain.value;
+};
+
+
+Sound.setFftSize = function( size )
+{
+ANALYSER_NODE.fftSize = size;
+};
+
+
+Sound.getFftSize = function()
+{
+return ANALYSER_NODE.fftSize;
 };
 
 

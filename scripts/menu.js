@@ -12,6 +12,8 @@ var DETUNE_CONTAINER;
 var Q_CONTAINER;
 var GAIN_CONTAINER;
 
+var RANGE_ELEMENTS = [];
+
 
 Menu.init = function()
 {
@@ -60,6 +62,20 @@ smoothing.oninput = function( event )
     Sound.setSmoothing( newSmoothing );
     };
 
+    // fft size
+var fftSizeInput = new RangeInput(
+    'FftSize',
+    'FftSizeValue',
+    [ 32, 64, 128, 256, 512, 1024, 2048 ],
+    function( value )
+        {
+        Sound.setFftSize( value );
+        updateBars();
+        }
+    );
+fftSizeInput.setValue( Sound.getFftSize() );
+
+RANGE_ELEMENTS.push( fftSizeInput );
 
     // file input
 var audioFile = document.getElementById( 'AudioFile' );

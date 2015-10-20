@@ -21,3 +21,11 @@ g.beginFill( 'black' );
 g.drawRect( 0, 0, width, height );
 g.endFill();
 };
+
+
+Bar.prototype.remove = function()
+{
+G.STAGE.removeChild( this.shape );
+
+this.shape = null;
+};
