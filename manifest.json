@@ -1,6 +1,0 @@
-{
-    "name": "audio visualizer",
-    "version": "1.0",
-    "app": { "launch": { "local_path": "index.html" } },
-    "manifest_version": 2
-}

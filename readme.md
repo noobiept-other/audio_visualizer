@@ -1,3 +1,9 @@
+[Try it out](http://nbpt.eu/audio_visualizer/)
+==============================================
+
+Shows a frequency bar graph of the given audio files.
+
+
 Run
 ===
 
