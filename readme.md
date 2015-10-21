@@ -1,4 +1,4 @@
-[Try it out](http://nbpt.eu/audio_visualizer/)
+[Try it out](http://nbpt.eu/app/audio_visualizer/)
 ==============================================
 
 Shows a frequency bar graph of the given audio files.
